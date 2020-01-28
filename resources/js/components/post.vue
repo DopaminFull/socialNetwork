@@ -9,7 +9,13 @@
     </div>
     <br />
     <div>
-      <textarea v-model="text" cols="30" rows="2" class="border-bottom w-100 mt-2 mb-3 p-2"></textarea>
+      <textarea
+        v-model="text"
+        cols="30"
+        rows="2"
+        class="border-bottom w-100 mt-2 mb-3 p-2"
+        placeholder="What's in your mind "
+      ></textarea>
     </div>
     <div class="text-right">
       <button class="btn text-white" style="background-color:#e44d3a" @click="post">post</button>

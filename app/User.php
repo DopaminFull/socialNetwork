@@ -106,6 +106,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'poster', 'id');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
     public function searchClients($name, $limit = 3)
     {
         $clients = $this->whereHas('client', function ($q) use ($name) {

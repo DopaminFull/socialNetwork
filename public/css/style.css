@@ -1362,6 +1362,11 @@ main {
 .like-com li .com {
 	position: relative;
 	top: -9px;
+	background: none;
+    border: none;
+    color: gray;
+	font-size: 14px;
+	outline: none;
 }
 .like-com li .com img {
 	margin-right: 10px;
@@ -1626,7 +1631,7 @@ main {
 }
 .comment-list {
 	display: table;
-	padding-bottom: 30px;
+
 }
 .bg-img {
 	display: table-cell;
@@ -6840,4 +6845,4 @@ ul#myTab {
     font-size: 14px;
     color: #666666;
 }
-/* my css*/
+/* my css*

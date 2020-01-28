@@ -37,12 +37,10 @@ Route::get('/posts', 'PostController@posts');
 Route::post('/notifications_seen', 'NotificationController@mark_seen');
 Route::post('/post', 'PostController@store');
 Route::post('/search', 'SearchController@client');
+Route::get('/comments/{post}', 'CommentsController@index');
+Route::post('/comment', 'CommentsController@store');
+Route::post('/like', 'LikeController@like');
 
 use Illuminate\Support\Facades\DB;
 
-Route::get('/testi', function () {
-    //DB::enableQueryLog();
-    return   auth()->user()->searchclients('ha');
-
-    //return DB::getQueryLog();
-});
+Route::get('/testi', function () { });

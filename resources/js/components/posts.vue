@@ -37,19 +37,26 @@
       <div class="job-status-bar">
         <ul class="like-com mt-4 w-100">
           <li>
-            <a href="#" class="com">
-              <i class="fas fa-heart"></i> Likes
-              54
-            </a>
+            <Like :post="post.id" :likeIt="post.likeIt"></Like>
           </li>
           <li>
-            <a href="#" class="com">
+            <button
+              href="#"
+              class="com text-dark"
+              @click=" post.showComments = !post.showComments  "
+            >
               <i class="fas fa-comment-alt"></i>
-              Comments 15
-            </a>
+              Comments {{post.commentsCount}}
+            </button>
           </li>
         </ul>
       </div>
+      <Comments
+        v-if="post.showComments"
+        :post="{post:post.id,offset:post.offset , user:auth.id , count:post.commentsCount}"
+        @newComment="post.CommentCounter++"
+      ></Comments>
+      <!--comment-section end-->
     </div>
 
     <!--top-profiles end-->
@@ -57,23 +64,30 @@
     <!--post-bar end-->
 
     <!--posty end-->
-    <div class="process-comm">
-      <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-      </div>
-    </div>
+
     <!--process-comm end-->
   </div>
 </template>
 <script>
+import Comments from "./Comments";
+import Like from "./Like";
 export default {
   props: {
     posts: {
       type: Array,
       default: null
-    }
-  }
+    },
+    auth: Object
+  },
+  data() {
+    return {
+      comments: []
+    };
+  },
+  components: {
+    Comments,
+    Like
+  },
+  methods: {}
 };
 </script>

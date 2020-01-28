@@ -20,6 +20,10 @@ class PostController extends Controller
         foreach ($posts as $post) {
             $post->poster_name = User::find($post->poster)->fullName();
             $post->created = $post->created_at->diffForHumans();
+            $post->showComments = false;
+            $post->commentsCount = $post->comments->count();
+            $post->offset = 0;
+            $post->likeIt = $post->likeIt(Auth::id());
         }
         return $posts;
     }

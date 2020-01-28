@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
     public function getAll()
     {
-        $notifcations =  Notification::where('receiver', Auth::id())->orderBy('created_at', 'DESC')->get();
+        $notifcations =  Notification::where('receiver', Auth::id())->orderBy('created_at', 'DESC')->take(5)->get();
         foreach ($notifcations as $notifcation) {
             $notifcation->sender_name = User::find($notifcation->sender)->fullName();
         }
