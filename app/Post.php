@@ -12,7 +12,7 @@ class Post extends Model
     public function user()
     {
 
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'poster', 'id');
     }
     public function comments()
     {
@@ -29,6 +29,11 @@ class Post extends Model
         foreach ($this->likes as $like) {
             array_push($likers, $like->user_id);
         }
-        return in_array($id, $likers) ? 'true' : 'false';
+        return in_array($id, $likers);
     }
+
+    // public function isLiked()
+    // {
+    //     return $this->likes()->count() > 0;
+    // }
 }

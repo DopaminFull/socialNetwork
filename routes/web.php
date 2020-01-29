@@ -1,9 +1,11 @@
 <?php
 
-
+use App\Comment;
+use App\Http\Resources\PostResource;
 use App\Notification;
 use App\Post;
 use App\User;
+
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Collection;
 
@@ -40,7 +42,12 @@ Route::post('/search', 'SearchController@client');
 Route::get('/comments/{post}', 'CommentsController@index');
 Route::post('/comment', 'CommentsController@store');
 Route::post('/like', 'LikeController@like');
+Route::post('/unlike', 'LikeController@unlike');
 
 use Illuminate\Support\Facades\DB;
 
-Route::get('/testi', function () { });
+Route::get('/testi', function () {
+    // DB::enableQueryLog();
+    return Comment::find(26)->post->poster;
+    // return DB::getQueryLog();
+});

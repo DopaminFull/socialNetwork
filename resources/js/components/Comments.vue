@@ -56,8 +56,8 @@
           </li>
         </ul>
         <button
-          @click="getMore(post.offset)"
-          v-if="post.count>this.offset"
+          @click="getMore()"
+          v-if="post.count>this.comments.length"
           class="view w-100"
         >View More</button>
       </div>
@@ -79,29 +79,25 @@ export default {
     return {
       comments: [],
       comment: "",
-      offset: this.post.offset,
       loading: false
     };
   },
   mounted() {
-    console.log(this.offset);
-    loading: true;
-    axios(`comments/${this.post.post}?offset=${this.offset}`).then(response => {
-      if (response.data.length > 0) {
-        this.offset += 3;
+    this.loading = true;
+    axios(`comments/${this.post.post}?offset=${this.comments.length}`).then(
+      response => {
+        this.comments = response.data;
+        this.loading = false;
+        console.log(response.data[0]);
       }
-      this.comments = response.data;
-      loading = false;
-      console.log(response.data[0]);
-    });
+    );
   },
   methods: {
     postComment(id) {
       axios
         .post(`/comment`, {
           body: this.comment,
-          post: this.post.post,
-          offset: this.offset
+          post: this.post.post
         })
         .then(response => {
           console.log(response.data);
@@ -112,11 +108,9 @@ export default {
     },
 
     getMore() {
-      axios(`comments/${this.post.post}?offset=${this.offset}`).then(
+      console.log(this.comments.length);
+      axios(`comments/${this.post.post}?offset=${this.comments.length}`).then(
         response => {
-          if (response.data.length > 0) {
-            this.offset += 3;
-          }
           this.comments = this.comments.concat(response.data);
           console.log(response.data);
         }

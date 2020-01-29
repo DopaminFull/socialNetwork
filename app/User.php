@@ -127,4 +127,11 @@ class User extends Authenticatable
         })->where('profile_id', 2)->take($limit)->get();
         return SearchCompany::collection($companies);
     }
+    public function poster()
+    {
+        if ($this->isCompany()) {
+            return $this->company->sigle;
+        }
+        return $this->fullName();
+    }
 }

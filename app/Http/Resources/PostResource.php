@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
-class CommentsResource extends JsonResource
+class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +18,13 @@ class CommentsResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'user_id' => $this->user_id,
+            'poster' => $this->poster,
             'poster_name' => $this->user->poster(),
-            'created' => $this->created_at->diffForHumans()
+            'created' => $this->created_at->diffForHumans(),
+            'showComments' => false,
+            'commentsCount' => $this->comments()->count(),
+            'likesCount' => $this->likes()->count(),
+            'likeIt' => $this->likeIt(Auth::id())
         ];
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <post :auth="this.auth" @post="this.addpost"></post>
+    <fieldpost :auth="this.auth" @post="this.addpost"></fieldpost>
     <posts :posts="this.posts" :auth="this.auth" v-if="!loading"></posts>
     <div v-if="loading" class="process-comm">
       <div class="spinner">
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import post from "./post";
+import fieldpost from "./fieldpost";
 import posts from "./posts";
 export default {
   props: {
@@ -32,7 +32,7 @@ export default {
   },
 
   components: {
-    post,
+    fieldpost,
     posts
   },
   methods: {

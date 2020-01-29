@@ -1,49 +1,81 @@
 <template>
-  <div class="post-topbar">
-    <div class="user-picy">
-      <img
-        :src="`https://randomuser.me/api/portraits/men/${this.auth.id}.jpg`"
-        alt
-        style="border-radius:50%"
-      />
+       <div class="post-bar" >
+      <div class="post_topbar">
+        <div class="usy-dt">
+          <img
+            :src="`https://randomuser.me/api/portraits/men/${post.poster}.jpg`"
+            alt
+            style="height:60px ; width:60px ; border-radius:50%"
+          />
+          <div class="usy-name">
+            <h3 v-text="post.poster_name"></h3>
+            <span v-text="post.created"></span>
+          </div>
+        </div>
+        <div class="ed-opts">
+          <a href="#" title class="ed-opts-open">
+            <i class="la la-ellipsis-v"></i>
+          </a>
+          <ul class="ed-options">
+            <li>
+              <a href="#" title>Edit Post</a>
+            </li>
+            <li>
+              <a href="#" title>Hide</a>
+            </li>
+            <li>
+              <a href="#" title>Close</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="epi-sec"></div>
+      <div class="job_descp mt-3">
+        <p v-text="post.body"></p>
+      </div>
+      <div class="job-status-bar">
+        <ul class="like-com mt-4 w-100">
+          <li>
+            <Like :post="{id:post.id , likeIt:post.likeIt , count :post.likesCount}"></Like>
+          </li>
+          <li>
+            <button
+              href="#"
+              class="com text-dark"
+              @click=" post.showComments = !post.showComments  "
+            >
+              <i class="fas fa-comment-alt"></i>
+              Comments {{post.commentsCount}}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <Comments
+        v-if="post.showComments"
+        :post="{post:post.id , user:auth.id , count:post.commentsCount}"
+        @newComment="post.commentsCount++"
+      ></Comments>
+      <!--comment-section end-->
     </div>
-    <br />
-    <div>
-      <textarea
-        v-model="text"
-        cols="30"
-        rows="2"
-        class="border-bottom w-100 mt-2 mb-3 p-2"
-        placeholder="What's in your mind "
-      ></textarea>
-    </div>
-    <div class="text-right">
-      <button class="btn text-white" style="background-color:#e44d3a" @click="post">post</button>
-    </div>
-    <!--post-st end-->
-  </div>
 </template>
 <script>
+import Comments from "./Comments";
+import Like from "./Like";
+
 export default {
-  props: {
-    auth: {
-      type: Object
-    }
+    props:{
+        post:{
+            type:Object,
+            default:null
+        },
+        auth:{
+          type:Object
+        }
+    },
+   
+  components: {
+    Comments,
+    Like
   },
-  data() {
-    return {
-      text: ""
-    };
-  },
-  mounted() {},
-  methods: {
-    post() {
-      if (this.text === "") {
-        return;
-      }
-      this.$emit("post", this.text);
-      this.text = "";
-    }
-  }
-};
+}
 </script>
