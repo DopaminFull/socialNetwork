@@ -21,7 +21,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('client_company');
             $table->dateTime('verified_at')->nullable();
-            $table->string('avatar')->nullable();
+            $table->text('avatar')->nullable();
+            $table->text('cover')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('profile_id')->references('id')->on('profiles');

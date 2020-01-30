@@ -8,6 +8,7 @@ use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -29,7 +30,20 @@ class UserController extends Controller
         auth()->user()->followings()->detach($id);
     }
 
+    /**
+     * Remember the pattern of uploading AVATARS or POSTS:
+     * Pattern USER_<ID>_<RANDOM_STRING> / [AVATARS | POSTS]
+     */
     public function upload(){
-        dd('you can work');
+        $user = auth();
+        $img = request('img');
+        $extension = $img->extension();
+        $imgName = Str::random(45).".".$extension;
+        if($user->user()->hasAvatar()){
+            request('img')->move(public_path($user->user()->avatar), $imgName);
+        }
+
+        $path = "uploads/USER_".$user->id()."_".Str::random(5)."/AVATARS/";
+        $user->user()->update(['avatar' => $path.$imgName]);
     }
 }

@@ -134,4 +134,12 @@ class User extends Authenticatable
         }
         return $this->fullName();
     }
+
+    public function hasAvatar(){
+        return $this->avatar != null;
+    }
+
+    public function hasCover(){
+        return $this->cover != null;
+    }
 }

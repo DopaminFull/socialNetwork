@@ -10,6 +10,7 @@ try {
     window.Popper = require("popper.js").default;
     window.$ = window.jQuery = require("jquery");
     window.Cropper = require('cropperjs');
+    window.BlobUtil = require('blob-util');
 
     require("bootstrap");
 } catch (e) {}

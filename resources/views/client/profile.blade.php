@@ -286,6 +286,7 @@
 @endsection
 @section('js')
     <script>
+
         $(()=>{
 
             // Set up image input file
@@ -324,9 +325,27 @@
                 $('#uploadProfile').click(upload);
             }
 
+            // Convert bas
+
             // Handle upload click
             function upload() {
-                console.log(cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: 720, height: 720}).toDataURL('image/jpeg'));
+                const base64 = cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: 720, height: 720})
+                                   .toDataURL('image/jpeg');
+                const block = base64.split(';');
+                const contentType = block[0].split(':')[1];
+                const realData = block[1].split(',')[1];
+                const img = BlobUtil.base64StringToBlob(realData, contentType);
+                const config = {
+                    header : {
+                        'Content-Type' : 'multipart/form-data'
+                    }
+                };
+                const data = new FormData();
+                data.append('img', img);
+
+                axios.post('{{ route('uploadprofile') }}', data, config)
+                     .then(res=>window.location.reload())
+                     .catch(err=>console.error(err));
             }
 
         });
