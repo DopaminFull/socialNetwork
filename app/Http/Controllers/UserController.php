@@ -32,7 +32,8 @@ class UserController extends Controller
 
     /**
      * Remember the pattern of uploading AVATARS or POSTS:
-     * Pattern USER_<ID>_<RANDOM_STRING> / [AVATARS | POSTS]
+     * Pattern USER_<ID>_<RANDOM_STRING> / [AVATARS | POSTS] / <>
+     * AVATAR: upload/USER_<USERID>_<RANDOM_STRING>/AVATARS/<IMAGNAME>.<EXTENSION>
      */
     public function upload(){
         $user = auth();
@@ -40,7 +41,9 @@ class UserController extends Controller
         $extension = $img->extension();
         $imgName = Str::random(45).".".$extension;
         if($user->user()->hasAvatar()){
-            request('img')->move(public_path($user->user()->avatar), $imgName);
+            $oldAvatarArr = explode('/', $user->user()->avatar);
+            $avatarPath = "{$oldAvatarArr[0]}/{$oldAvatarArr[1]}/{$oldAvatarArr[2]}/";
+            request('img')->move(public_path($avatarPath), $oldAvatarArr[3]);
         }
 
         $path = "uploads/USER_".$user->id()."_".Str::random(5)."/AVATARS/";
