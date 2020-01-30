@@ -28,4 +28,8 @@ class UserController extends Controller
     {
         auth()->user()->followings()->detach($id);
     }
+
+    public function upload(){
+        dd('you can work');
+    }
 }

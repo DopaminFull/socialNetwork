@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href={{asset("css/style.css")}}>
     <link rel="stylesheet" type="text/css" href={{asset("css/responsive.css")}}>
     <link rel="icon" href="{{asset('images/wd-logo.png')}}">
+    @yield('css')
 
 </head>
 

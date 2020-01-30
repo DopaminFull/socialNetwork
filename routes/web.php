@@ -44,6 +44,10 @@ Route::post('/comment', 'CommentsController@store');
 Route::post('/like', 'LikeController@like');
 Route::post('/unlike', 'LikeController@unlike');
 
+# Update Profile START
+Route::post('upload/profile', 'UserController@upload')->name('uploadprofile');
+# Update Profile END
+
 use Illuminate\Support\Facades\DB;
 
 Route::get('/testi', function () {

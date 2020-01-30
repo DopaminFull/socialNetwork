@@ -9,6 +9,7 @@ window._ = require("lodash");
 try {
     window.Popper = require("popper.js").default;
     window.$ = window.jQuery = require("jquery");
+    window.Cropper = require('cropperjs');
 
     require("bootstrap");
 } catch (e) {}

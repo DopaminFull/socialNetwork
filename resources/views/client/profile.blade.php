@@ -17,7 +17,7 @@
                             <div class="main-left-sidebar">
                                 <div class="user_profile">
                                     <div class="user-pro-img">
-                                        <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}} alt="">
+                                        <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}} alt="" data-toggle="modal" data-target="#imagePicker">
                                     </div>
                                     <!--user-pro-img end-->
                                     <div class="user_pro_status">
@@ -257,8 +257,78 @@
         <!--overview-edit end-->
     </div>
     <!--overview-box end-->
-
-
-
 </div>
+
+<!-- Modal upload profile pictures -->
+<div class="modal fade" id="imagePicker" tabindex="-1" role="dialog" aria-labelledby="imagePickerCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Pick image</h5>
+            </div>
+            <div class="modal-body">
+                <div id="imgToCropContainer" style="width: 800px;height: 250px;">
+                    <img id="croppedImg" src="{{ asset('images/resources/adver-img.png') }}">
+                </div>
+                <input type="file" id="pickImg" class="form-control"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="float-right" id="uploadProfile">Upload</button>
+                <button type="button" class="float-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" type="text/css" href={{asset("css/cropperjs.css")}}>
+@endsection
+@section('js')
+    <script>
+        $(()=>{
+
+            // Set up image input file
+            $('#pickImg').on('change', function(e){
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const img = new Image();
+                    img.src = reader.result;
+                    img.id = 'croppedImg';                  // Remember we're give it the same ID, so we can reference it later
+                    img.width = 1270;
+                    img.height = 720;
+                    img.display = 'block';
+                    img.maxWidth = 100;
+                    $('#imgToCropContainer').empty();       // Clear the container
+                    $('#imgToCropContainer').append(img);   // Then append it
+                    setUpCropper();
+                };
+
+                reader.readAsDataURL($('#pickImg').prop('files')[0]);
+            });
+
+            // init Cropper
+            var cropper;
+            function setUpCropper() {
+                image = document.querySelector('#croppedImg');
+                cropper = new Cropper(image, {
+                    aspectRatio: 4 / 3,
+                    scalable: false,
+                    background: false,
+                    cropBoxResizable: false,
+                    movable: false,
+                    dragMode: 'move',
+                    crop(event) {},
+                });
+
+                $('#uploadProfile').click(upload);
+            }
+
+            // Handle upload click
+            function upload() {
+                console.log(cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: 720, height: 720}).toDataURL('image/jpeg'));
+            }
+
+        });
+    </script>
 @endsection
