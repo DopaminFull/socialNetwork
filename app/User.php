@@ -64,8 +64,7 @@ class User extends Authenticatable
         return $this->profile_id === 1;
     }
 
-    function isMe()
-    {
+    function isMe(){
         return $this->id === Auth::id();
     }
 
@@ -141,5 +140,13 @@ class User extends Authenticatable
 
     public function hasCover(){
         return $this->cover != null;
+    }
+
+    public function getAvatar(){
+        return ($this->avatar != null ? asset($this->upload_path.$this->avatar) : asset('images/default/user-icon.png'));
+    }
+
+    public function getCover(){
+        return ($this->cover != null ? asset($this->upload_path.$this->cover) : asset('images/default/cover-img.jpg'));
     }
 }

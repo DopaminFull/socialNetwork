@@ -2229,6 +2229,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     auth: {
@@ -2378,6 +2384,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     auth: {
@@ -2401,6 +2409,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var channel = Echo.channel("user." + this.auth.id);
       channel.listen(".notif", function (response) {
+        console.log(response);
+
         _this.nots.unshift(response);
 
         _this.count++;
@@ -13318,7 +13328,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.count {\r\n  position: absolute;\r\n  top: 5px;\r\n  right: 23px;\r\n  font-size: 14px;\r\n  background: white;\r\n  color: red;\r\n  width: 15px;\r\n  height: 17px;\r\n  text-align: center;\r\n  line-height: 18px;\r\n  border-radius: 50%;\r\n  box-shadow: 0 0 1px #333;\n}\n.not {\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  font-size: 13px;\n}\r\n", ""]);
+exports.push([module.i, "\n.count {\r\n    position: absolute;\r\n    top: 5px;\r\n    right: 23px;\r\n    font-size: 14px;\r\n    background: white;\r\n    color: red;\r\n    width: 15px;\r\n    height: 17px;\r\n    text-align: center;\r\n    line-height: 18px;\r\n    border-radius: 50%;\r\n    box-shadow: 0 0 1px #333;\n}\n.not {\r\n    color: #ffffff;\r\n    cursor: pointer;\r\n    font-size: 13px;\n}\r\n", ""]);
 
 // exports
 
@@ -53030,11 +53040,7 @@ var render = function() {
     _c("div", { staticClass: "user-picy" }, [
       _c("img", {
         staticStyle: { "border-radius": "50%" },
-        attrs: {
-          src:
-            "https://randomuser.me/api/portraits/men/" + this.auth.id + ".jpg",
-          alt: ""
-        }
+        attrs: { src: this.auth.upload_path + this.auth.avatar, alt: "" }
       })
     ]),
     _vm._v(" "),
@@ -53072,7 +53078,7 @@ var render = function() {
           staticStyle: { "background-color": "#e44d3a" },
           on: { click: _vm.post }
         },
-        [_vm._v("post")]
+        [_vm._v("\n            post\n        ")]
       )
     ])
   ])
@@ -53153,7 +53159,7 @@ var render = function() {
               })
             : _vm._e()
         ]),
-        _vm._v("\n    Notification\n  ")
+        _vm._v("\n        Notification\n    ")
       ]
     ),
     _vm._v(" "),
@@ -53186,10 +53192,7 @@ var render = function() {
                         "border-radius": "50%"
                       },
                       attrs: {
-                        src:
-                          "https://randomuser.me/api/portraits/men/" +
-                          not.sender +
-                          ".jpg",
+                        src: "'/" + not.sender.sender_path + "'",
                         alt: ""
                       }
                     })
@@ -66665,8 +66668,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Yasser\Desktop\socialNetwork\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Yasser\Desktop\socialNetwork\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\USER\Desktop\cdma_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\USER\Desktop\cdma_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

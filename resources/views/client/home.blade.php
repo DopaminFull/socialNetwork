@@ -16,8 +16,7 @@
                                     <div class="user-profile">
                                         <div class="username-dt">
                                             <div class="usr-pic">
-                                                <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}}
-                                                    alt="">
+                                                <img src={{auth()->user()->getAvatar()}} alt="">
                                             </div>
                                         </div>
                                         <!--username-dt end-->

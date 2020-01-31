@@ -55,6 +55,11 @@ Route::get('/testi', function () {
     //    return Comment::find(26)->post->poster;
     // return DB::getQueryLog();
     $path = "uploads/USER_1_fWV29/AVATARS/r2IZpmMSgl0tiQoOTOVqjabuuiBMSWlXsSnX5azDS0w7c.jpeg";
+<<<<<<< HEAD
     $path2 = explode("/", $path);
     print($path2[0] . '/' . $path2[1] . '/' . $path2[2]);
+=======
+    $data = explode('/', $path, -1);
+     dd(implode('/', $data));
+>>>>>>> 1af77a1201c92cf0d196e02b0ede1b80d3be9da5
 });

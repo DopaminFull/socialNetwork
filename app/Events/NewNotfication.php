@@ -44,13 +44,15 @@ class NewNotfication implements ShouldBroadcast
     }
     public function broadcastWith()
     {
+
         return [
             'id' => $this->notification->id,
             'body' => $this->notification->body,
             'sender' => $this->notification->sender,
+            'sender_avatar' => $this->sender->upload_path . $this->sender->avatar,
             'receiver' => $this->notification->receiver,
             'created_at' => $this->notification->created_at,
-            'sender_name' => User::find($this->notification->sender)->fullName(),
+            'sender_name' => $this->sender->fullName(),
         ];
     }
 }
