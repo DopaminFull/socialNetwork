@@ -83,7 +83,7 @@ class RegisterController extends Controller
             return redirect('register')->withErrors($validator)->withInput(['type' => $request->type]);
         if ($request->type == "user") {
             $client_id = Client::create(['full_name' => $request->name])->id;
-            User::create([
+            $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'profile_id' => 3,
@@ -95,7 +95,7 @@ class RegisterController extends Controller
                 'type' => $request->typ,
                 'sigle' => $request->companyName
             ])->id;
-            User::create([
+            $user = User::create([
                 'email' => $request->companyEmail,
                 'password' => Hash::make($request->companyPassword),
                 'profile_id' => 2,
@@ -103,6 +103,11 @@ class RegisterController extends Controller
                 'api_token' => Str::random(60),
             ]);
         }
+
+        // Set up user folder for uploads
+        $user->upload_path = "uploads/USER_{$user->id}_".Str::random(5)."/";
+        $user->save();
+
         return redirect('login')->with('success', 'Account created successfully');
     }
 }

@@ -5,7 +5,7 @@
 
 
     <section class="cover-sec">
-        <img src="{{ asset('images/resources/cover-img.jpg') }}" alt="">
+        <img src="{{ $user->getCover() }}" alt=""  id="coverPicture" data-toggle="modal" data-target="#imagePicker">
     </section>
 
     <main>
@@ -17,7 +17,8 @@
                             <div class="main-left-sidebar">
                                 <div class="user_profile">
                                     <div class="user-pro-img">
-                                        <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}} alt="" data-toggle="modal" data-target="#imagePicker">
+                                        <img src="{{$user->getAvatar()}}"
+                                             id="profilePicture" data-toggle="modal" data-target="#imagePicker">
                                     </div>
                                     <!--user-pro-img end-->
                                     <div class="user_pro_status">
@@ -268,7 +269,7 @@
             </div>
             <div class="modal-body">
                 <div id="imgToCropContainer" style="width: 800px;height: 250px;">
-                    <img id="croppedImg" src="{{ asset('images/resources/adver-img.png') }}">
+                    <img id="croppedImg" src="">
                 </div>
                 <input type="file" id="pickImg" class="form-control"/>
             </div>
@@ -289,8 +290,30 @@
 
         $(()=>{
 
+            // Global vars
+            var cropper;
+            var type;
+            var ratio;
+
+            // Register clicks
+            $('#uploadProfile').click(upload);
+            $('#coverPicture').click(()=>{
+                type = 'cover';
+                ratio = 4.2;
+                setUpReaderCropper();
+            });
+            $('#profilePicture').click(()=>{
+                type = 'avatar';
+                ratio = 1.1;
+                setUpReaderCropper();
+            });
+
             // Set up image input file
             $('#pickImg').on('change', function(e){
+                setUpReaderCropper();
+            });
+
+            function setUpReaderCropper() {
                 const reader = new FileReader();
                 reader.onload = function(){
                     const img = new Image();
@@ -302,35 +325,32 @@
                     img.maxWidth = 100;
                     $('#imgToCropContainer').empty();       // Clear the container
                     $('#imgToCropContainer').append(img);   // Then append it
-                    setUpCropper();
+
+                    // init Cropper
+                    image = document.querySelector('#croppedImg');
+                    if(cropper)
+                        cropper.reset();
+
+                    cropper = new Cropper(image, {
+                        aspectRatio: ratio,
+                        scalable: false,
+                        background: false,
+                        cropBoxResizable: false,
+                        movable: false,
+                        dragMode: 'move',
+                        crop(event) {},
+                    });
                 };
 
                 reader.readAsDataURL($('#pickImg').prop('files')[0]);
-            });
-
-            // init Cropper
-            var cropper;
-            function setUpCropper() {
-                image = document.querySelector('#croppedImg');
-                cropper = new Cropper(image, {
-                    aspectRatio: 4 / 3,
-                    scalable: false,
-                    background: false,
-                    cropBoxResizable: false,
-                    movable: false,
-                    dragMode: 'move',
-                    crop(event) {},
-                });
-
-                $('#uploadProfile').click(upload);
             }
-
-            // Convert bas
 
             // Handle upload click
             function upload() {
-                const base64 = cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: 720, height: 720})
-                                   .toDataURL('image/jpeg');
+                const width = type == 'avatar' ? 160 : 1200;
+                const height = type == 'avatar' ? 160 : 170;
+                const base64 = cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: width, height: height})
+                                      .toDataURL('image/jpeg');
                 const block = base64.split(';');
                 const contentType = block[0].split(':')[1];
                 const realData = block[1].split(',')[1];
@@ -342,9 +362,11 @@
                 };
                 const data = new FormData();
                 data.append('img', img);
+                data.append('type', type);
+                console.log('type is: '+type);
 
                 axios.post('{{ route('uploadprofile') }}', data, config)
-                     .then(res=>window.location.reload())
+                     .then(res=>{window.location.reload()})
                      .catch(err=>console.error(err));
             }
 

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('client_company');
             $table->dateTime('verified_at')->nullable();
+            $table->text('upload_path')->nullable();
             $table->text('avatar')->nullable();
             $table->text('cover')->nullable();
             $table->rememberToken();
