@@ -260,32 +260,36 @@
     <!--overview-box end-->
 </div>
 
-<!-- Modal upload profile pictures -->
-<div class="modal fade" id="imagePicker" tabindex="-1" role="dialog" aria-labelledby="imagePickerCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Pick image</h5>
-            </div>
-            <div class="modal-body">
-                <div id="imgToCropContainer" style="width: 800px;height: 250px;">
-                    <img id="croppedImg" src="">
+@if($user->isMe())
+        <!-- Modal upload profile pictures -->
+        <div class="modal fade" id="imagePicker" tabindex="-1" role="dialog" aria-labelledby="imagePickerCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Pick image</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div id="imgToCropContainer" style="width: 800px;height: 250px;">
+                            <img id="croppedImg" src="">
+                        </div>
+                        <input type="file" id="pickImg" class="form-control"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="float-right" id="uploadProfile">Upload</button>
+                        <button type="button" class="float-right" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <input type="file" id="pickImg" class="form-control"/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="float-right" id="uploadProfile">Upload</button>
-                <button type="button" class="float-right" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </div>
-</div>
+@endif
+
 @endsection
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href={{asset("css/cropperjs.css")}}>
-@endsection
-@section('js')
+@if($user->isMe())
+    @section('css')
+        <link rel="stylesheet" type="text/css" href={{asset("css/cropperjs.css")}}>
+    @endsection
+    @section('js')
     <script>
 
         $(()=>{
@@ -373,3 +377,4 @@
         });
     </script>
 @endsection
+@endif

@@ -64,8 +64,7 @@ class User extends Authenticatable
         return $this->profile_id === 1;
     }
 
-    function isMe()
-    {
+    function isMe(){
         return $this->id === Auth::id();
     }
 

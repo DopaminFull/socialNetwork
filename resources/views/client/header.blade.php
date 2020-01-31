@@ -60,7 +60,7 @@
             <!--menu-btn end-->
             <div class="user-account">
                 <div class="user-info w-75">
-                    <img src="{{$user->getAvatar()}}" alt="" style="height:30px ; width:30px">
+                    <img src="{{auth()->user()->getAvatar()}}" alt="" style="height:30px ; width:30px">
                     <a href="#" title=""></a>
                     <i class="la la-sort-down"></i>
                 </div>
