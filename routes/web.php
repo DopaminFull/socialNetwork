@@ -1,6 +1,7 @@
 <?php
 
 use App\Comment;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\PostResource;
 use App\Notification;
 use App\Post;
@@ -50,11 +51,4 @@ Route::post('upload/profile', 'UserController@upload')->name('uploadprofile');
 
 use Illuminate\Support\Facades\DB;
 
-Route::get('/testi', function () {
-    // DB::enableQueryLog();
-//    return Comment::find(26)->post->poster;
-    // return DB::getQueryLog();
-    $path = "uploads/USER_1_fWV29/AVATARS/r2IZpmMSgl0tiQoOTOVqjabuuiBMSWlXsSnX5azDS0w7c.jpeg";
-    $data = explode('/', $path, -1);
-     dd(implode('/', $data));
-});
+Route::get('/testi', function () { });
