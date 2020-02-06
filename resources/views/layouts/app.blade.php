@@ -41,8 +41,13 @@
 
 
         @yield('content')
-    </div>
 
+    </div>
+    @if(auth()->check())
+    <script>
+        window.auth = {!! auth()->user()  !!}
+    </script>
+    @endif
     <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/popper.js')}}"></script>
@@ -53,6 +58,7 @@
     <script type="text/javascript" src="{{ asset('js/scrollbar.js') }}"></script>
 
     @yield('js')
+
 </body>
 
 </html>

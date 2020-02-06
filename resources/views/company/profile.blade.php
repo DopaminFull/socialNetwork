@@ -6,8 +6,9 @@
 
 
 
+
     <section class="cover-sec">
-        <img src="{{asset("images/resources/company-cover.jpg")}}" alt="">
+        <img src="{{ $user->getCover() }}" alt="" id="coverPicture" data-toggle="modal" data-target="#imagePicker">
     </section>
     <!--cover-sec end-->
 
@@ -21,7 +22,8 @@
                             <div class="main-left-sidebar">
                                 <div class="user_profile">
                                     <div class="user-pro-img">
-                                        <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}} alt="">
+                                        <img src="{{$user->getAvatar()}}" id="profilePicture" data-toggle="modal"
+                                            data-target="#imagePicker">
                                     </div>
                                     <!--user-pro-img end-->
                                     <div class="user_pro_status">
@@ -377,17 +379,7 @@
                                 <!--product-feed-tab end-->
                                 <div class="product-feed-tab" id="portfolio-dd">
                                     <div class="portfolio-gallery-sec">
-                                        <h3>Client</h3>
-                                        <div class="gallery_pf">
-                                            <div class="row">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum
-                                                    iure laudantium nobis quia quis quos, voluptatum! Accusantium ad
-                                                    animi architecto doloremque ducimus eveniet hic libero magnam nam
-                                                    nemo, neque nihil quasi reiciendis suscipit vel!</p>
-
-                                            </div>
-                                        </div>
-                                        <!--gallery_pf end-->
+                                        <client></client>
                                     </div>
                                     <!--portfolio-gallery-sec end-->
                                 </div>
@@ -607,4 +599,119 @@
 
 </div>
 <!--theme-layout end-->
+@if($user->isMe())
+<!-- Modal upload profile pictures -->
+<div class="modal fade" id="imagePicker" tabindex="-1" role="dialog" aria-labelledby="imagePickerCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Pick image</h5>
+            </div>
+            <div class="modal-body">
+                <div id="imgToCropContainer" style="width: 800px;height: 250px;">
+                    <img id="croppedImg" src="">
+                </div>
+                <input type="file" id="pickImg" class="form-control" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="float-right" id="uploadProfile">Upload</button>
+                <button type="button" class="float-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
+@if($user->isMe())
+@section('css')
+<link rel="stylesheet" type="text/css" href={{asset("css/cropperjs.css")}}>
+@endsection
+@section('js')
+<script>
+    $(()=>{
+
+            // Global vars
+            var cropper;
+            var type;
+            var ratio;
+
+            // Register clicks
+            $('#uploadProfile').click(upload);
+            $('#coverPicture').click(()=>{
+                type = 'cover';
+                ratio = 4.2;
+                setUpReaderCropper();
+            });
+            $('#profilePicture').click(()=>{
+                type = 'avatar';
+                ratio = 1.1;
+                setUpReaderCropper();
+            });
+
+            // Set up image input file
+            $('#pickImg').on('change', function(e){
+                setUpReaderCropper();
+            });
+
+            function setUpReaderCropper() {
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const img = new Image();
+                    img.src = reader.result;
+                    img.id = 'croppedImg';                  // Remember we're give it the same ID, so we can reference it later
+                    img.width = 1270;
+                    img.height = 720;
+                    img.display = 'block';
+                    img.maxWidth = 100;
+                    $('#imgToCropContainer').empty();       // Clear the container
+                    $('#imgToCropContainer').append(img);   // Then append it
+
+                    // init Cropper
+                    image = document.querySelector('#croppedImg');
+                    if(cropper)
+                        cropper.reset();
+
+                    cropper = new Cropper(image, {
+                        aspectRatio: ratio,
+                        scalable: false,
+                        background: false,
+                        cropBoxResizable: false,
+                        movable: false,
+                        dragMode: 'move',
+                        crop(event) {},
+                    });
+                };
+
+                reader.readAsDataURL($('#pickImg').prop('files')[0]);
+            }
+
+            // Handle upload click
+            function upload() {
+                const width = type == 'avatar' ? 160 : 1200;
+                const height = type == 'avatar' ? 160 : 170;
+                const base64 = cropper.getCroppedCanvas({imageSmoothingQuality:'medium', width: width, height: height})
+                                      .toDataURL('image/jpeg');
+                const block = base64.split(';');
+                const contentType = block[0].split(':')[1];
+                const realData = block[1].split(',')[1];
+                const img = BlobUtil.base64StringToBlob(realData, contentType);
+                const config = {
+                    header : {
+                        'Content-Type' : 'multipart/form-data'
+                    }
+                };
+                const data = new FormData();
+                data.append('img', img);
+                data.append('type', type);
+                console.log('type is: '+type);
+
+                axios.post('{{ route('uploadprofile') }}', data, config)
+                     .then(res=>{window.location.reload()})
+                     .catch(err=>console.error(err));
+            }
+
+        });
+</script>
+@endsection
+@endif

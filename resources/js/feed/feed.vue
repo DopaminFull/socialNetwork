@@ -16,6 +16,7 @@
 import fieldpost from "./fieldpost";
 import posts from "./posts";
 export default {
+<<<<<<< HEAD:resources/js/components/feed.vue
   props: {
     auth: {
       type: Object
@@ -24,10 +25,13 @@ export default {
         type: String
     }
   },
+=======
+>>>>>>> 034f538f62cba09ac8f9f02e5bb5e3f30f6ca82a:resources/js/feed/feed.vue
   data() {
     return {
       posts: [],
-      loading: false
+      loading: false,
+      auth
     };
   },
   mounted() {

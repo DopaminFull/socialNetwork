@@ -19,6 +19,7 @@ class CommentsResource extends JsonResource
             'body' => $this->body,
             'user_id' => $this->user_id,
             'poster_name' => $this->user->poster(),
+            'poster_avatar' => $this->user->getAvatar(),
             'created' => $this->created_at->diffForHumans()
         ];
     }

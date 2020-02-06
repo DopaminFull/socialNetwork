@@ -36,7 +36,8 @@ class UserController extends Controller
      * Pattern USER_<ID>_<RANDOM_STRING> / [AVATARS | POSTS] / <>
      * AVATAR: upload/USER_<USERID>_<RANDOM_STRING>/AVATARS/<RANDOM_IMAGNAME>.<EXTENSION>
      */
-    public function upload(){
+    public function upload()
+    {
 
         $user = auth()->user();
         $img = request('img');
@@ -44,17 +45,18 @@ class UserController extends Controller
         $type = request('type');
         $path = $user->upload_path;
 
-        if($type == 'avatar')
-            $imgName = $user->hasAvatar() ? $user->avatar : Str::random(45).".$extension";
-        elseif($type == 'cover')
-            $imgName = $user->hasCover() ? $user->cover   : Str::random(45).".$extension";
+        if ($type == 'avatar')
+            $imgName = $user->hasAvatar() ? $user->avatar : Str::random(45) . ".$extension";
+        elseif ($type == 'cover')
+            $imgName = $user->hasCover() ? $user->cover   : Str::random(45) . ".$extension";
 
         // Finally update & upload the user's avatar/cover
         $img->move(public_path($path), $imgName);
-        if($type == 'avatar')
-            $user->update(['avatar' => $imgName]);
-        elseif($type == 'cover'){
-//            $user->update(['avatar' => $imgName]);
+        if ($type == 'avatar') {
+            $user->avatar = $imgName;
+            $user->save();
+        } elseif ($type == 'cover') {
+            //            $user->update(['avatar' => $imgName]);
             $user->cover = $imgName;
             $user->save();
         }

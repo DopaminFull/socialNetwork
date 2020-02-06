@@ -13,7 +13,7 @@
       style="overflow-y: auto;
     overflow-x: hidden;
     
-    height: 300px;"
+    height: 300px"
     >
       <div class="nt-title">
         <a href="#" title>Last week</a>
@@ -23,21 +23,19 @@
           <div class="noty-user-img">
             <a :href="`/u/${not.sender}`">
               <img
-                :src="
-                                    `https://randomuser.me/api/portraits/men/${not.sender}.jpg`
-                                "
+                :src="not.sender_avatar"
                 alt
                 style="height:30px ; width:30px ; border-radius:50%"
               />
             </a>
           </div>
-          <div class="notification-info w-75">
+          <div class="notification-info" style="width: 80% !important;">
             <h3 v-text="not.sender_name + ' ' + not.body"></h3>
           </div>
           <!--notification-info -->
         </div>
       </div>
-      <div class="view-all-nots">
+      <div class="view-all-nots position-absolute" style="bottom: 0;">
         <a href="#" title>View All Notification</a>
       </div>
       <!--nott-list end-->
@@ -47,16 +45,11 @@
 </template>
 <script>
 export default {
-  props: {
-    auth: {
-      type: Object,
-      default: null
-    }
-  },
   data() {
     return {
       nots: [],
-      count: 0
+      count: 0,
+      auth
     };
   },
   mounted() {
@@ -75,6 +68,7 @@ export default {
       axios
         .post(`/notifications`)
         .then(response => {
+          console.log(response.data);
           this.nots = Array.from(response.data);
           this.count = this.nots.filter(not => !not.seen_at).length;
           console.log(this.nots[0]);

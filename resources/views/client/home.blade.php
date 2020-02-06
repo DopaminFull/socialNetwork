@@ -14,7 +14,11 @@
                                     <div class="user-profile">
                                         <div class="username-dt">
                                             <div class="usr-pic">
+<<<<<<< HEAD
                                                 <img src="{{$user->getAvatar()}}">
+=======
+                                                <img src={{auth()->user()->getAvatar()}} alt="">
+>>>>>>> 034f538f62cba09ac8f9f02e5bb5e3f30f6ca82a
                                             </div>
                                         </div>
                                         <!--username-dt end-->
@@ -117,7 +121,12 @@
                         </div>
                         <div class="col-lg-6 col-md-8 no-pd">
                             <div class="main-ws-sec">
+<<<<<<< HEAD
                                 <Feed :auth="{{$user}}" avatar="{{$user->getAvatar()}}"></Feed>
+=======
+                                <Feed :auth="{{{auth()->user()}}}"></Feed>
+
+>>>>>>> 034f538f62cba09ac8f9f02e5bb5e3f30f6ca82a
                             </div>
                             <!--main-ws-sec end-->
                         </div>

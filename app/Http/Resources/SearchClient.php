@@ -17,7 +17,7 @@ class SearchClient extends JsonResource
         return [
             "user_id" => $this->id,
             "name" => $this->fullName(),
-            "url_pic" => $this->picUrl(),
+            "avatar" => $this->getAvatar(),
             "profile" => $this->profile()
         ];
     }
