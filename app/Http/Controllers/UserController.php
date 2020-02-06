@@ -49,29 +49,6 @@ class UserController extends Controller
         elseif($type == 'cover')
             $imgName = $user->hasCover() ? $user->cover   : Str::random(45).".$extension";
 
-        /*if($type == 'avatar'){
-
-            if($user->hasAvatar()){
-                $oldAvatarArr = explode('/', $user->avatar);
-                $path = "{$oldAvatarArr[0]}/{$oldAvatarArr[1]}/{$oldAvatarArr[2]}/";
-                $imgName = $oldAvatarArr[3];
-            }else{
-                $extension = $img->extension();
-                $imgName = Str::random(45).".".$extension;
-            }
-
-        }elseif($type == 'cover'){
-            if($user->hasCover()){
-                $oldAvatarArr = explode('/', $user->cover);
-                $path = "{$oldAvatarArr[0]}/{$oldAvatarArr[1]}/{$oldAvatarArr[2]}/";
-                $imgName = $oldAvatarArr[3];
-            }else{
-                $extension = $img->extension();
-                $imgName = Str::random(45).".".$extension;
-            }
-
-        }*/
-
         // Finally update & upload the user's avatar/cover
         $img->move(public_path($path), $imgName);
         if($type == 'avatar')

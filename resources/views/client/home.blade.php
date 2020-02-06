@@ -3,8 +3,6 @@
 @section('content')
 <div class="wrapper bg-white">
 
-
-
     <main>
         <div class="main-section">
             <div class="container">
@@ -16,8 +14,7 @@
                                     <div class="user-profile">
                                         <div class="username-dt">
                                             <div class="usr-pic">
-                                                <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}}
-                                                    alt="">
+                                                <img src="{{$user->getAvatar()}}">
                                             </div>
                                         </div>
                                         <!--username-dt end-->
@@ -120,8 +117,7 @@
                         </div>
                         <div class="col-lg-6 col-md-8 no-pd">
                             <div class="main-ws-sec">
-                                <Feed :auth="{{auth()->user()}}"></Feed>
-
+                                <Feed :auth="{{$user}}" avatar="{{$user->getAvatar()}}"></Feed>
                             </div>
                             <!--main-ws-sec end-->
                         </div>

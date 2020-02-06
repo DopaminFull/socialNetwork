@@ -2151,6 +2151,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     auth: {
       type: Object
+    },
+    avatar: {
+      type: String
     }
   },
   data: function data() {
@@ -2160,6 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    console.log(this.avatar);
     this.getPosts();
   },
   components: {
@@ -2173,10 +2177,9 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       axios.get("/posts").then(function (Response) {
         _this.loading = false;
-        console.log(Response.data[0]);
         _this.posts = Array.from(Response.data);
       })["catch"](function (e) {
-        console.log(e);
+        console.error(e);
       });
     },
     addpost: function addpost(text) {
@@ -2187,7 +2190,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         _this2.posts.unshift(Response.data);
       })["catch"](function (e) {
-        console.log(e);
+        console.error(e);
       });
     }
   }
@@ -2227,13 +2230,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     auth: {
       type: Object
-    }
+    },
+    avatar: String
   },
   data: function data() {
     return {
@@ -52976,7 +52978,7 @@ var render = function() {
     "div",
     [
       _c("fieldpost", {
-        attrs: { auth: this.auth },
+        attrs: { auth: this.auth, avatar: this.avatar },
         on: { post: this.addpost }
       }),
       _vm._v(" "),
@@ -53030,11 +53032,7 @@ var render = function() {
     _c("div", { staticClass: "user-picy" }, [
       _c("img", {
         staticStyle: { "border-radius": "50%" },
-        attrs: {
-          src:
-            "https://randomuser.me/api/portraits/men/" + this.auth.id + ".jpg",
-          alt: ""
-        }
+        attrs: { src: this.avatar }
       })
     ]),
     _vm._v(" "),

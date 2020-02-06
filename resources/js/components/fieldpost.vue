@@ -1,9 +1,7 @@
 <template>
   <div class="post-topbar">
     <div class="user-picy">
-      <img
-        :src="`https://randomuser.me/api/portraits/men/${this.auth.id}.jpg`"
-        alt
+      <img :src="this.avatar"
         style="border-radius:50%"
       />
     </div>
@@ -28,7 +26,8 @@ export default {
   props: {
     auth: {
       type: Object
-    }
+    },
+    avatar: String
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fieldpost :auth="this.auth" @post="this.addpost"></fieldpost>
+    <fieldpost :auth="this.auth" :avatar="this.avatar" @post="this.addpost"></fieldpost>
     <posts :posts="this.posts" :auth="this.auth" v-if="!loading"></posts>
     <div v-if="loading" class="process-comm">
       <div class="spinner">
@@ -19,6 +19,9 @@ export default {
   props: {
     auth: {
       type: Object
+    },
+    avatar:{
+        type: String
     }
   },
   data() {
@@ -28,6 +31,7 @@ export default {
     };
   },
   mounted() {
+      console.log(this.avatar);
     this.getPosts();
   },
 
@@ -42,11 +46,10 @@ export default {
         .get(`/posts`)
         .then(Response => {
           this.loading = false;
-          console.log(Response.data[0]);
           this.posts = Array.from(Response.data);
         })
         .catch(e => {
-          console.log(e);
+          console.error(e);
         });
     },
     addpost(text) {
@@ -58,7 +61,7 @@ export default {
           this.posts.unshift(Response.data);
         })
         .catch(e => {
-          console.log(e);
+          console.error(e);
         });
     }
   }
