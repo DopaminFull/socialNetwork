@@ -17,7 +17,7 @@ class SearchCompany extends JsonResource
         return [
             "user_id" => $this->id,
             "name" => $this->company->sigle,
-            "url_pic" => $this->picUrl(),
+            "avatar" => $this->getAvatar(),
             "profile" => $this->profile()
         ];
     }

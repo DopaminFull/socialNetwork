@@ -20,10 +20,12 @@ class PostResource extends JsonResource
             'body' => $this->body,
             'poster' => $this->poster,
             'poster_name' => $this->user->poster(),
+            'poster_avatar' => $this->user->getAvatar(),
             'created' => $this->created_at->diffForHumans(),
             'showComments' => false,
             'commentsCount' => $this->comments()->count(),
             'likesCount' => $this->likes()->count(),
+            'image' => $this->post_image,
             'likeIt' => $this->likeIt(Auth::id())
         ];
     }

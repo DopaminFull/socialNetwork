@@ -4,7 +4,7 @@
       <div class="post-comment">
         <div class="comment_box mb-4 d-flex">
           <img
-            :src="`https://randomuser.me/api/portraits/men/${post.user}.jpg`"
+            :src="this.auth.upload_path + this.auth.avatar"
             alt
             style="height:50px ; width:50px ; border-radius:50%"
           />
@@ -34,9 +34,9 @@
                 <div class="d-flex w-100 mb-2">
                   <div class>
                     <img
-                      :src="`https://randomuser.me/api/portraits/men/${comment.user_id}.jpg`"
+                      :src="comment.poster_avatar"
                       alt
-                      style=" border-radius:50%"
+                      style="height:50px ; width:50px ; border-radius:50%"
                     />
                   </div>
                   <div class="col-10 p-0 mt-1 ml-2">
@@ -79,7 +79,8 @@ export default {
     return {
       comments: [],
       comment: "",
-      loading: false
+      loading: false,
+      auth
     };
   },
   mounted() {

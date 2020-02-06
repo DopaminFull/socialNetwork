@@ -49,10 +49,10 @@ class NewNotfication implements ShouldBroadcast
             'id' => $this->notification->id,
             'body' => $this->notification->body,
             'sender' => $this->notification->sender,
-            'sender_avatar' => $this->sender->upload_path . $this->sender->avatar,
+            'sender_avatar' => $this->sender->getAvatar(),
             'receiver' => $this->notification->receiver,
             'created_at' => $this->notification->created_at,
-            'sender_name' => $this->sender->fullName(),
+            'sender_name' => $this->sender->poster(),
         ];
     }
 }

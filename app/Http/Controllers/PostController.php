@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function posts()
     {
-        return PostResource::collection(Post::whereIn('poster', auth()->user()->followings()->select('id')->get())->orderBy('created_at', 'DESC')->get());
+        return PostResource::collection(Post::whereIn('poster', Auth::user()->followings()->pluck('id')->toArray())->orWhere('poster', Auth::id())->orderBy('created_at', 'DESC')->get());
     }
     public function store(Request $request)
     {

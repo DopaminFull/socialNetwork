@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
 use App\Notification;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,11 +17,7 @@ class NotificationController extends Controller
 
     public function getAll()
     {
-        $notifcations =  Notification::where('receiver', Auth::id())->orderBy('created_at', 'DESC')->take(5)->get();
-        foreach ($notifcations as $notifcation) {
-            $notifcation->sender_name = User::find($notifcation->sender)->fullName();
-        }
-        return $notifcations;
+        return NotificationResource::collection(Notification::where('receiver', Auth::id())->orderBy('created_at', 'DESC')->take(5)->get());
     }
     public function mark_seen()
     {

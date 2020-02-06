@@ -20,9 +20,10 @@ window.Vue = require("vue");
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("Follow", require("./components/follow.vue").default);
-Vue.component("Search", require("./components/search.vue").default);
+Vue.component("Search", require("./search/search.vue").default);
 Vue.component("Notification", require("./components/notification.vue").default);
-Vue.component("Feed", require("./components/feed.vue").default);
+Vue.component("Feed", require("./feed/feed.vue").default);
+Vue.component("Client", require("./client/client.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

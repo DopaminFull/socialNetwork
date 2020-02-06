@@ -6,10 +6,7 @@
             </div>
             <!--logo end-->
             <div class="search-bar">
-                <form>
-                    <input type="text" name="search" placeholder="Search...">
-                    <button type="submit"><i class="la la-search"></i></button>
-                </form>
+                <Search></Search>
             </div>
             <!--search-bar end-->
             <nav>
@@ -89,8 +86,7 @@
             <!--menu-btn end-->
             <div class="user-account">
                 <div class="user-info w-75">
-                    <img src={{"https://randomuser.me/api/portraits/men/".Auth::id().".jpg"}} alt=""
-                        style="height:30px ; width:30px">
+                    <img src="{{auth()->user()->getAvatar()}}" alt="" style="height:30px ; width:30px">
                     <a href="#" title=""></a>
                     <i class="la la-sort-down"></i>
                 </div>

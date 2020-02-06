@@ -16,15 +16,11 @@
 import fieldpost from "./fieldpost";
 import posts from "./posts";
 export default {
-  props: {
-    auth: {
-      type: Object
-    }
-  },
   data() {
     return {
       posts: [],
-      loading: false
+      loading: false,
+      auth
     };
   },
   mounted() {

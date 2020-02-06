@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 $factory->define(Post::class, function (Faker $faker) {
 
     return [
-        "poster" => rand(1, 4),
+        "poster" => rand(2, 3),
         "body" => $faker->text(),
     ];
 });

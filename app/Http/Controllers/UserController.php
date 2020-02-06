@@ -36,22 +36,8 @@ class UserController extends Controller
      * Pattern USER_<ID>_<RANDOM_STRING> / [AVATARS | POSTS] / <>
      * AVATAR: upload/USER_<USERID>_<RANDOM_STRING>/AVATARS/<RANDOM_IMAGNAME>.<EXTENSION>
      */
-<<<<<<< HEAD
     public function upload()
     {
-        $user = auth();
-        $img = request('img');
-        $extension = $img->extension();
-        $imgName = Str::random(45) . "." . $extension;
-        // if($user->user()->hasAvatar()){
-
-        // }
-
-        $path = "uploads/USER_" . $user->id() . "_" . Str::random(5) . "/AVATARS/";
-        request('img')->move(public_path($user->user()->avatar), $imgName);
-        $user->user()->update(['avatar' => $path . $imgName]);
-=======
-    public function upload(){
 
         $user = auth()->user();
         $img = request('img');
@@ -59,10 +45,10 @@ class UserController extends Controller
         $type = request('type');
         $path = $user->upload_path;
 
-        if($type == 'avatar')
-            $imgName = $user->hasAvatar() ? $user->avatar : Str::random(45).".$extension";
-        elseif($type == 'cover')
-            $imgName = $user->hasCover() ? $user->cover   : Str::random(45).".$extension";
+        if ($type == 'avatar')
+            $imgName = $user->hasAvatar() ? $user->avatar : Str::random(45) . ".$extension";
+        elseif ($type == 'cover')
+            $imgName = $user->hasCover() ? $user->cover   : Str::random(45) . ".$extension";
 
         /*if($type == 'avatar'){
 
@@ -89,13 +75,13 @@ class UserController extends Controller
 
         // Finally update & upload the user's avatar/cover
         $img->move(public_path($path), $imgName);
-        if($type == 'avatar')
-            $user->update(['avatar' => $imgName]);
-        elseif($type == 'cover'){
-//            $user->update(['avatar' => $imgName]);
+        if ($type == 'avatar') {
+            $user->avatar = $imgName;
+            $user->save();
+        } elseif ($type == 'cover') {
+            //            $user->update(['avatar' => $imgName]);
             $user->cover = $imgName;
             $user->save();
         }
->>>>>>> 1af77a1201c92cf0d196e02b0ede1b80d3be9da5
     }
 }

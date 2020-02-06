@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-lg-6 col-md-8 no-pd">
                             <div class="main-ws-sec">
-                                <Feed :auth="{{auth()->user()}}"></Feed>
+                                <Feed :auth="{{{auth()->user()}}}"></Feed>
 
                             </div>
                             <!--main-ws-sec end-->

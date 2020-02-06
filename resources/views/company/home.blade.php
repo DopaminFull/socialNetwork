@@ -16,8 +16,7 @@
                                     <div class="user-profile">
                                         <div class="username-dt">
                                             <div class="usr-pic">
-                                                <img src={{"https://randomuser.me/api/portraits/men/".$user->id.".jpg"}}
-                                                    alt="">
+                                                <img src={{auth()->user()->getAvatar()}} alt="">
                                             </div>
                                         </div>
                                         <!--username-dt end-->
@@ -30,7 +29,8 @@
                                     <ul class="user-fw-status">
 
                                         <li>
-                                            <a href="my-profile.html" title="">View Profile</a>
+                                            <a href="{{ route('profile', ['user' => $user->id]) }}" title="">View
+                                                Profile</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -105,7 +105,7 @@
                             <div class="main-ws-sec">
 
                                 <!--post-topbar end-->
-                                <Feed :auth="{{auth()->user()}}"></Feed>
+                                <Feed></Feed>
                                 <!--posts-section end-->
                             </div>
 
