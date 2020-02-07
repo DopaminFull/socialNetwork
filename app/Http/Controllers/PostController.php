@@ -9,14 +9,17 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
-{
-    public function posts()
-    {
-        return PostResource::collection(Post::whereIn('poster', Auth::user()->followings()->pluck('id')->toArray())->orWhere('poster', Auth::id())->orderBy('created_at', 'DESC')->get());
+class PostController extends Controller{
+
+    public function posts(){
+        return PostResource::collection(Post::whereIn('poster', Auth::user()->followings()->pluck('id')->toArray())->orWhere('poster', Auth::id())
+                           ->orderBy('created_at', 'DESC')
+                           ->offset(request('offset'))
+                           ->take(5)
+                           ->get());
     }
-    public function store(Request $request)
-    {
+
+    public function store(Request $request){
         return new PostResource(
             Post::create([
                 "poster" => Auth::id(),

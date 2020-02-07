@@ -24,11 +24,11 @@ Vue.component("Search", require("./search/search.vue").default);
 Vue.component("Notification", require("./components/notification.vue").default);
 Vue.component("Feed", require("./feed/feed.vue").default);
 Vue.component("Client", require("./client/client.vue").default);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+
+/* Infinite-Scrolling START */
+Vue.use(require('vue-resource'));
+Vue.component('feed-loading', () => import('vue-infinite-loading')); // Lazy load it for better performance
+/* Infinite-Scrolling END */
 
 const app = new Vue({
     el: "#app"
